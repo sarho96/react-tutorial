@@ -13,10 +13,25 @@
   </head>
   <body>
     <div id="content"></div>
-    <script type="text/babel" src="scripts/example.js"></script>
+    <!-- <script type="text/babel" src="scripts/example.js"></script> -->
     <script type="text/babel">
-      // To get started with this tutorial running your own code, simply remove
-      // the script tag loading scripts/example.js and start writing code here.
+    // custome React class names must be capital letters
+      var CommentBox = React.createClass({
+        render: function(){
+          return(
+            //below is JSX, a JS syntax extension that looks like XML
+            //using JSX is easier to use than plain JavaScript bc its concise and familiar syntax for defining tree structures with attributes
+            //use of JSX is more familiar for designers - the preferred language
+            <div className="commentBox">
+            Hello World! I am a CommentBox.
+            </div>
+          );
+        }
+      });
+      ReactDom.render(
+        <CommentBox />,
+        document.getElementById('content')
+      );
     </script>
   </body>
 </html>
