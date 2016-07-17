@@ -64,6 +64,26 @@
       }
     });
 
+    // Comment component
+    var Comment = React.createClass({
+      render: function(){
+        return(
+          <div className="comment">
+            <h2 className="commentAuthor">
+              {this.props.author}
+              // this variable will depend on data passed in from its parent
+              // data passed in from parent component is available as a 'property' on the child component
+              // the 'properties' are accessed through 'this.props'
+              // using props will allow us to read the data passed ot the comment from CommentList and render some markup
+            </h2>
+            {this.props.children}
+            // by using {}, you can drop text or React components into the tree
+            // 'this.props.children' and/or 'this.props' lets us access named attributes passed to components as keys
+          </div>
+        );
+      }
+    });
+
       ReactDom.render(
         // ReactDom.render() instantiates the root component
         // it also starts the framework
