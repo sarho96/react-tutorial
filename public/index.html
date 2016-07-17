@@ -23,11 +23,15 @@
         // the most important method is the render method which returns a tree of React components that will eventually render to HTML
         render: function(){
           return(
-            //below is JSX, a JS syntax extension that looks like XML
+            //below is JSX, a JavaScript syntax extension that looks like XML
             //using JSX is easier to use than plain JavaScript bc its concise and familiar syntax for defining tree structures with attributes
             //use of JSX is more familiar for designers - the preferred language
             <div className="commentBox">
-            Hello World! I am a CommentBox.
+              <h1>Comments</h1>
+              <CommentList /> // this is a HTML component
+              <CommentForm /> // this is a HTMl component
+              // it is ok to mix HTML tags and components together
+              // the HTML components are regular React Components but will be compiled automatically to be rewritten into HTML tags
             </div>
             // the <div> is not actually DOM nodes
             // these are instantiations of React div components
