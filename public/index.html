@@ -28,7 +28,7 @@
             //use of JSX is more familiar for designers - the preferred language
             <div className="commentBox">
               <h1>Comments</h1>
-              <CommentList /> // this is a HTML component
+              <CommentList data={this.props.data} />
               <CommentForm /> // this is a HTMl component
               // it is ok to mix HTML tags and components together
               // the HTML components are regular React Components but will be compiled automatically to be rewritten into HTML tags
@@ -47,8 +47,9 @@
       render: function (){
         return (
           <div className="commentList">
-            <Comment author="Pete Hunt"> This is one comment</Comment>
-            <Comment author="Jordan Walke">This is *another* comment</comment>
+            {commentNodes}
+            // <Comment author="Pete Hunt"> This is one comment</Comment>
+            // <Comment author="Jordan Walke">This is *another* comment</comment>
             //we are passing some data from the parent 'CommentList' to the child 'Comment'
             //for example, we passed 'Pete Hunt' via an attribute and "this is one comment" using JSX child node to the first 'Comment'
             //the 'Comment' component can access this properties through this.props.author and this.props.children
@@ -104,8 +105,14 @@
             // we have to rely on remarkable to be secure now
           </div>
         );
-      }
-    });
+
+        // Render JSON data
+        var data = [
+          {id: 1, author: "Pete Hunt", text: "This is one comment"},
+          {id: 2, author: "Jordan Walke", text: "This is *another* comment"}
+          ];
+          }
+        });
 
       ReactDom.render(
         // ReactDom.render() instantiates the root component
@@ -113,7 +120,7 @@
         // it injects the markup into a raw DOM element through document.getElementById('content')
         //its important that ReactDom remains at the bottom of the script
         // it should only be called after the composite compoents have been defined
-        <CommentBox />,
+        <CommentBox data={data} />,
         document.getElementById('content')
       );
     </script>
