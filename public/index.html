@@ -71,6 +71,11 @@
     // Comment component (child of CommentList)
     var Comment = React.createClass({
       render: function(){
+        var markdown = new Remarkable();
+        //markdown is a simple way to format inline text
+        //Remarkable is a third-party library
+        //Remarkable takes Markdown text and converts it to raw HTML
+        //to include this library, we have to link it in the <head> section
         return(
           <div className="comment">
             <h2 className="commentAuthor">
@@ -81,9 +86,10 @@
               // the 'properties' are accessed through 'this.props'
               // using props will allow us to read the data passed ot the comment from CommentList and render some markup
             </h2>
-            {this.props.children}
-            // this is a JS expression in braces nested inside JSX
+            {md.render(this.props.children.toString())}
+            // JS can be used within JSX, it is identified by {}
             // 'this.props.children' and/or 'this.props' lets us access named attributes passed to components as keys
+            //using the Remarkable library, it will convert this.props.children from React's wrapped text to a raw string that remarkable will understand, that's why we call toString()
           </div>
         );
       }
