@@ -71,11 +71,22 @@
     // Comment component (child of CommentList)
     var Comment = React.createClass({
       render: function(){
-        var markdown = new Remarkable();
-        //markdown is a simple way to format inline text
-        //Remarkable is a third-party library
-        //Remarkable takes Markdown text and converts it to raw HTML
-        //to include this library, we have to link it in the <head> section
+        rawMarkup: function(){
+          var markdown = new Remarkable();
+          //markdown is a simple way to format inline text
+          //for example, you can be *..* for emphasis and market also provides format for inline text
+          //Remarkable is a third-party library
+          //Remarkable takes Markdown text and converts it to raw HTML
+          //to include this library, we have to link it in the <head> section
+          var rawMarkup = markdown.render(this.props.children.toString());
+          // JS can be used within JSX, it is identified by {}
+          // 'this.props.children' and/or 'this.props' lets us access named attributes passed to components as keys
+          //using the Remarkable library, it will convert this.props.children from React's wrapped text to a raw string that remarkable will understand, that's why we call toString()
+          return { --html:rawMarkup};
+        }
+        //the reason why we have to put mardown into a function is bc using it separately will only render <p>This is <em>another</em>comment</p>
+        //it doesn't render as HTML because React is built to be secure and prevent frameworks from being misused that'll lead to XSS attack
+        //one way around it is to nest everything into a function and make it a value of the variable rawMarkup
         return(
           <div className="comment">
             <h2 className="commentAuthor">
@@ -86,10 +97,11 @@
               // the 'properties' are accessed through 'this.props'
               // using props will allow us to read the data passed ot the comment from CommentList and render some markup
             </h2>
-            {md.render(this.props.children.toString())}
-            // JS can be used within JSX, it is identified by {}
-            // 'this.props.children' and/or 'this.props' lets us access named attributes passed to components as keys
-            //using the Remarkable library, it will convert this.props.children from React's wrapped text to a raw string that remarkable will understand, that's why we call toString()
+            <span dangerouslySetInnerHTML={this.rawMarkup()} />
+            //this special API makes it intentionally difficult to insert raw HTML
+            //for remarkable, this is a backdoor that'll help us get around the security in React
+            //remarkable will automatically strip HTML markup and insecure links from the output
+            // we have to rely on remarkable to be secure now
           </div>
         );
       }
